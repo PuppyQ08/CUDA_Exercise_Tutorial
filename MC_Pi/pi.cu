@@ -1,12 +1,3 @@
-/*******************************************************
- * Copyright (c) 2014, ArrayFire
- * All rights reserved.
- *
- * This file is distributed under 3-clause BSD license.
- * The complete license agreement can be obtained at:
- * http://arrayfire.com/licenses/BSD-3-Clause
- ********************************************************/
-
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -54,11 +45,6 @@ __global__ void picuda(curandState *state,int* output,int numRand,int len,int nu
 }
 
 int main(void){
-    /*
-      TODO any initialization code you need goes here, e.g. random
-      number seeding, cudaMalloc allocations, etc.  Random number
-      _generation_ should still go in pi().
-    */
     std::clock_t start;
     double duration;
     start = std::clock();
@@ -76,12 +62,6 @@ int main(void){
     //allocate variable in device
     cudaMalloc((void**)&d_outint, sizeof(int));
     cudaMalloc((void**)&States,block_size*num_blocks*sizeof(curandState));
-    /*
-      TODO Put your code here.  You can use anything in the CUDA
-      Toolkit, including libraries, Thrust, or your own device
-      kernels, but do not use ArrayFire functions here.  If you have
-      initialization code, see pi_init().
-    */
     //launch kernels
     picuda<<<num_blocks, block_size>>>(States,d_outint,numRand,samples,num_blocks);
     if ( cudaSuccess != cudaGetLastError())
@@ -94,11 +74,7 @@ int main(void){
     
     duration = (std::clock()-start)/(double) CLOCKS_PER_SEC;
     printf("GPU runing for evaluating Pi took %7.5f sec and error of %.8f", duration, error);
-
-    /*
-      TODO This function should contain the clean up. You should add
-      memory deallocation etc here.
-    */
+    //free data
     cudaFree(d_outint);
     free(h_outint);
 
