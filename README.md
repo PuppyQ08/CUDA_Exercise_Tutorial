@@ -15,7 +15,7 @@ make cpu
 ```
 make cu
 ```
-- Makefile explain
+- Makefile explain\
 `--ccbin`: to set the host compiler as g++ (default)\
 `-I`: include the path of any cuda related library\
 `-m64`: specific 64 bit (default)\
